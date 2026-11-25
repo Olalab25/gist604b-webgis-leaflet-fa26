@@ -50,7 +50,7 @@ async function loadGeoJSON(path, group, options) {
 }
 
 const jobs = [
-    loadGeoJSON('data/Tempe_Amenities.geojson', amenities, {
+    loadGeoJSON('data/Tempe_Amenities_point.geojson', amenities, {
         pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
             pane: 'amenities',
             radius: 6, color: '#ffffff', weight: 1.5,
@@ -58,11 +58,11 @@ const jobs = [
         }),
         onEachFeature: (feature, layer) => popup(feature, layer, 'Amenity type', 'AmenityType')
     }),
-    loadGeoJSON('data/Tempe_Road_Geometry.geojson', roads, {
+    loadGeoJSON('data/Tempe_Road_Geometry_line.geojson', roads, {
         style: { color: '#e88732', weight: 2, opacity: 0.85 },
         onEachFeature: (feature, layer) => popup(feature, layer, 'Road class', 'rm_func')
     }),
-    loadGeoJSON('data/Tempe_Park_Boundaries_and_Amenities.geojson', parks, {
+    loadGeoJSON('data/Tempe_Park_Boundaries_polygon.geojson', parks, {
         style: { color: '#08df57', weight: 2, fillColor: '#22c55e', fillOpacity: 0.35 },
         onEachFeature: (feature, layer) => popup(feature, layer, 'Park class', 'ParkClass')
     })
