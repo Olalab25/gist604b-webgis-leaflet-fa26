@@ -1,5 +1,8 @@
 // Initialize the map in Tempe, Arizona (latitude, longitude).
 const map = L.map('map', { zoomControl: false }).setView([33.4255, -111.9400], 12);
+map.attributionControl.addAttribution(
+    '<a href="https://www.arcgis.com/home/item.html?id=70aedb833ab04e76b4a917ef12c7da23">Road geometry: City of Tempe</a>'
+);
 
 // Basemap and navigation controls.
 const basemap = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -22,7 +25,7 @@ function popup(feature, layer, category, field) {
     const p = feature.properties || {};
     const content = document.createElement('div');
     const name = document.createElement('strong');
-    name.textContent = p.name || p.ParkName || p.ON_STREET || p['@id'] || 'Unnamed feature';
+    name.textContent = p.name || p.ParkName || p.RM_STREET || p.ON_STREET || p['@id'] || 'Unnamed feature';
     const detail = document.createElement('div');
     detail.textContent = `${category}: ${p[field] || 'Not specified'}`;
     content.append(name, detail);
@@ -49,9 +52,9 @@ const jobs = [
         }),
         onEachFeature: (feature, layer) => popup(feature, layer, 'Amenity', 'amenity')
     }),
-    loadGeoJSON('data/Tempe_Road_Segment_(detail).geojson', roads, {
+    loadGeoJSON('data/Tempe_Road_Geometry.geojson', roads, {
         style: { color: '#e88732', weight: 2, opacity: 0.85 },
-        onEachFeature: (feature, layer) => popup(feature, layer, 'Road class', 'CLASS')
+        onEachFeature: (feature, layer) => popup(feature, layer, 'Road class', 'rm_func')
     }),
     loadGeoJSON('data/Tempe_Park_Boundaries_and_Amenities.geojson', parks, {
         style: { color: '#08df57', weight: 2, fillColor: '#22c55e', fillOpacity: 0.35 },
