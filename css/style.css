@@ -11,3 +11,4 @@ header p { margin: 0; font-size: 14px; }
 .legend .line { background: #e88732; height: 3px; }
 .legend .polygon { background: #86cf91; border: 1px solid #15803d; }
 .leaflet-popup-content { line-height: 1.5; }
+

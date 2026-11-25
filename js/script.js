@@ -22,7 +22,7 @@ function popup(feature, layer, category, field) {
     const p = feature.properties || {};
     const content = document.createElement('div');
     const name = document.createElement('strong');
-    name.textContent = p.name || 'Unnamed feature';
+    name.textContent = p.name || p.ParkName || p.ON_STREET || p['@id'] || 'Unnamed feature';
     const detail = document.createElement('div');
     detail.textContent = `${category}: ${p[field] || 'Not specified'}`;
     content.append(name, detail);
@@ -42,20 +42,20 @@ async function loadGeoJSON(path, group, options) {
 }
 
 const jobs = [
-    loadGeoJSON('data/tempe_amenities.geojson', amenities, {
+    loadGeoJSON('data/Tempe_Amenities.geojson', amenities, {
         pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
             radius: 6, color: '#ffffff', weight: 1.5,
             fillColor: '#2563eb', fillOpacity: 0.9
         }),
         onEachFeature: (feature, layer) => popup(feature, layer, 'Amenity', 'amenity')
     }),
-    loadGeoJSON('data/tempe_roads.geojson', roads, {
+    loadGeoJSON('data/Tempe_Road_Segment_(detail).geojson', roads, {
         style: { color: '#e88732', weight: 2, opacity: 0.85 },
-        onEachFeature: (feature, layer) => popup(feature, layer, 'Road type', 'highway')
+        onEachFeature: (feature, layer) => popup(feature, layer, 'Road class', 'CLASS')
     }),
-    loadGeoJSON('data/tempe_parks.geojson', parks, {
+    loadGeoJSON('data/Tempe_Park_Boundaries_and_Amenities.geojson', parks, {
         style: { color: '#15803d', weight: 2, fillColor: '#22c55e', fillOpacity: 0.35 },
-        onEachFeature: (feature, layer) => popup(feature, layer, 'Land use', 'leisure')
+        onEachFeature: (feature, layer) => popup(feature, layer, 'Park class', 'ParkClass')
     })
 ];
 Promise.allSettled(jobs).then(results => {
