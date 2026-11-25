@@ -1,0 +1,13 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; color: #203343; background: #f5f7fa; display: flex; flex-direction: column; height: 100vh; }
+header { background: #183c50; color: white; padding: 16px 24px; }
+h1 { margin: 0 0 5px; font-size: 24px; }
+header p { margin: 0; font-size: 14px; }
+#map { flex: 1; min-height: 300px; width: 100%; }
+#status { margin: 0; padding: 8px 16px; font-size: 13px; }
+.legend { background: white; padding: 12px; border-radius: 6px; box-shadow: 0 1px 5px #0004; line-height: 24px; }
+.legend i { display: inline-block; width: 18px; height: 12px; margin-right: 8px; vertical-align: middle; }
+.legend .point { background: #2563eb; border-radius: 50%; width: 12px; margin-right: 14px; }
+.legend .line { background: #e88732; height: 3px; }
+.legend .polygon { background: #86cf91; border: 1px solid #15803d; }
+.leaflet-popup-content { line-height: 1.5; }
