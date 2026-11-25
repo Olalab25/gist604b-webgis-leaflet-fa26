@@ -3,6 +3,9 @@ const map = L.map('map', { zoomControl: false }).setView([33.4255, -111.9400], 1
 map.attributionControl.addAttribution(
     '<a href="https://www.arcgis.com/home/item.html?id=70aedb833ab04e76b4a917ef12c7da23">Road geometry: City of Tempe</a>'
 );
+map.attributionControl.addAttribution(
+    '<a href="https://www.arcgis.com/home/item.html?id=728bcfecac5b4b9fb3ad8a198c5f5231">Public amenities: City of Tempe (CC BY 4.0)</a>'
+);
 
 // Basemap and navigation controls.
 const basemap = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -16,6 +19,7 @@ L.control.scale({ position: 'bottomleft', metric: true, imperial: true }).addTo(
 const parks = L.layerGroup().addTo(map);
 const roads = L.layerGroup().addTo(map);
 const amenities = L.layerGroup().addTo(map);
+map.createPane('amenities').style.zIndex = '650';
 L.control.layers({ 'OpenStreetMap': basemap }, {
     'Public amenities': amenities, 'Roads and streets': roads, 'Public parks': parks
 }, { collapsed: false }).addTo(map);
@@ -25,7 +29,8 @@ function popup(feature, layer, category, field) {
     const p = feature.properties || {};
     const content = document.createElement('div');
     const name = document.createElement('strong');
-    name.textContent = p.name || p.ParkName || p.RM_STREET || p.ON_STREET || p['@id'] || 'Unnamed feature';
+    name.textContent = p.Name || p.RamadaName || p.CourtName || p.FieldName || p.Type ||
+        p.ParkName || p.Park || p.name || p.RM_STREET || p.ON_STREET || p['@id'] || 'Unnamed feature';
     const detail = document.createElement('div');
     detail.textContent = `${category}: ${p[field] || 'Not specified'}`;
     content.append(name, detail);
@@ -47,10 +52,11 @@ async function loadGeoJSON(path, group, options) {
 const jobs = [
     loadGeoJSON('data/Tempe_Amenities.geojson', amenities, {
         pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+            pane: 'amenities',
             radius: 6, color: '#ffffff', weight: 1.5,
             fillColor: '#2563eb', fillOpacity: 0.9
         }),
-        onEachFeature: (feature, layer) => popup(feature, layer, 'Amenity', 'amenity')
+        onEachFeature: (feature, layer) => popup(feature, layer, 'Amenity type', 'AmenityType')
     }),
     loadGeoJSON('data/Tempe_Road_Geometry.geojson', roads, {
         style: { color: '#e88732', weight: 2, opacity: 0.85 },
