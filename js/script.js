@@ -54,7 +54,7 @@ const jobs = [
         onEachFeature: (feature, layer) => popup(feature, layer, 'Road class', 'CLASS')
     }),
     loadGeoJSON('data/Tempe_Park_Boundaries_and_Amenities.geojson', parks, {
-        style: { color: '#15803d', weight: 2, fillColor: '#22c55e', fillOpacity: 0.35 },
+        style: { color: '#08df57', weight: 2, fillColor: '#22c55e', fillOpacity: 0.35 },
         onEachFeature: (feature, layer) => popup(feature, layer, 'Park class', 'ParkClass')
     })
 ];
